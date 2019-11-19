@@ -15,7 +15,7 @@ module.exports = {
   },
   test: {
     client: 'pg',
-    connection: 'postgres://localhost/publications_test',
+    connection: 'postgres://localhost/sweater_weather_dev_test',
     migrations: {
       directory: './db/migrations'
     },
@@ -23,7 +23,7 @@ module.exports = {
   },
   production: {
     client: 'pg',
-    connection: '',
+    connection: 'postgres://hkinevrtpmwdyt:967f1d877f7bd24b4fb15aa51acf886cc91302b572db6ec35fcfa2372a043393@ec2-107-22-163-220.compute-1.amazonaws.com:5432/d29e82lkt483f8',
     migrations: {
       directory: './db/migrations'
     },
