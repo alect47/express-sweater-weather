@@ -6,51 +6,32 @@ const configuration = require('../../../knexfile')[environment];
 const database = require('knex')(configuration);
 const fetch = require('node-fetch');
 
-async function fetchLocation() {
-  let response = await fetch('https://maps.googleapis.com/maps/api/geocode/json?address=denver,co&key=AIzaSyCxsZ6ZwtaVGwlsIsnRL5F7nZuof2nvKAE');
+async function fetchLocation(address) {
+  let response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address.location}&key=${process.env.GOOGLE_API_KEY}`);
   let location = await response.json();
   return location;
 }
 
-async function coordinates() {
-  let data = await fetchLocation()
+async function coordinates(address) {
+  let data = await fetchLocation(address)
   let coords = data.results[0].geometry.location;
   return coords;
 };
-async function fetchForecast() {
-  let coords = await coordinates();
-  let response = await fetch(`https://api.darksky.net/forecast/4c4d194e5a137d75e00d72538cb9dd68/${coords.lat},${coords.lng}`);
+
+async function fetchForecast(address) {
+  let coords = await coordinates(address);
+  let response = await fetch(`https://api.darksky.net/forecast/${process.env.DARK_SKY_API}/${coords.lat},${coords.lng}`);
   let forecast = await response.json();
-  return console.log(forecast);
+  return forecast;
 };
 
 
 router.get('/', (request, response) => {
-  fetchForecast();
-
-  // This function returns the geocode info from google
-  // async function fetchLocation() {
-  //   let response = await fetch('https://maps.googleapis.com/maps/api/geocode/json?address=denver,co&key=AIzaSyCxsZ6ZwtaVGwlsIsnRL5F7nZuof2nvKAE');
-  //   let location = await response.json();
-  //   return location;
-  // }
-
-
-  // This function extracts the coordinates
-  // async function coordinates() {
-  //   let data = await fetchLocation()
-  //   let coords = data.results[0].geometry.location;
-  //   return coords;
-  // };
-
-  // This function passes the coordinates to the darksky api
-    // async function fetchForecast() {
-    //   let coords = await coordinates();
-    //   let response = await fetch(`https://api.darksky.net/forecast/4c4d194e5a137d75e00d72538cb9dd68/${coords.lat},${coords.lng}`);
-    //   let forecast = await response.json();
-    //   return console.log(forecast);
-    // };
-
+  fetchForecast(request.query)
+    .then(data => response.send(data))
+    .catch(reason => response.send(reason.message))
 });
 
+// Could create const all = () => database('papers')
+//   .select()
 module.exports = router;
