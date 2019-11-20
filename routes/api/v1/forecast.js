@@ -27,7 +27,6 @@ async function fetchForecast(address) {
 
 function requireUser(apiKey) {
   var user = database('user').where('api_key', apiKey)
-
 }
 
 // Might need to add .select() to the end of the query?
@@ -39,25 +38,14 @@ router.get('/', (request, response) => {
           .then(data => response.status(200).send(data))
           .catch(reason => response.send(reason.message))
       } else {
-        response.status(404).json({
-          error: `Could not find user with api key: ${request.body.api_key}`
+        response.status(401).json({
+          error: `Unauthorized, Could not find user with api key: ${request.body.api_key}`
         });
       }
     })
     .catch(error => {
       response.status(500).json({ error });
     });
-  // var user = database('users').where('api_key', request.body.api_key).select()
-  // console.log(user)
-    // .then(papers => {
-    //   if (papers.length) {
-    //     response.status(200).json(papers);
-    //   }
-  // if (user.length) {
-    // fetchForecast(request.query)
-    //   .then(data => response.send(data))
-    //   .catch(reason => response.send(reason.message))
-    // }
 });
 
 // Could create const all = () => database('papers')
