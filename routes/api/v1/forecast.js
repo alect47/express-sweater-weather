@@ -25,10 +25,6 @@ async function fetchForecast(address) {
   return forecast;
 };
 
-function requireUser(apiKey) {
-  var user = database('user').where('api_key', apiKey)
-}
-
 // Might need to add .select() to the end of the query?
 router.get('/', (request, response) => {
   database('users').where('api_key', request.body.api_key)
