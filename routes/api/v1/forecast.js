@@ -23,12 +23,10 @@ async function fetchForecast(address) {
   let response = await fetch(`https://api.darksky.net/forecast/${process.env.DARK_SKY_API}/${coords.lat},${coords.lng}`);
   let forecast = await response.json();
   return forecast;
-  // return console.log(forecast);
 };
 
 
 router.get('/', (request, response) => {
-  // console.log(request.query)
   fetchForecast(request.query)
     .then(data => response.send(data))
     .catch(reason => response.send(reason.message))
