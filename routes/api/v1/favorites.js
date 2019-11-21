@@ -13,7 +13,6 @@ const fetchForecast = helpers.fetchForecast;
 
 async function getUser(key) {
   let users = await database('users').where('api_key', key);
-  // console.log(users[0].id)
   return users[0].id;
 }
 
@@ -40,8 +39,8 @@ async function getFavForecast(key) {
   console.log(forecasts)
   return forecasts;
 }
+
 // Might need to add .select() to the end of the query?
-// getFavForecast(request.body.api_key)
 router.get('/', (request, response) => {
   database('users').where('api_key', request.body.api_key)
     .then(users => {
@@ -61,6 +60,4 @@ router.get('/', (request, response) => {
 });
 
 
-// Could create const all = () => database('papers')
-//   .select()
 module.exports = router;
