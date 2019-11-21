@@ -40,13 +40,33 @@ async function getFavForecast(key) {
   return forecasts;
 }
 
-// Might need to add .select() to the end of the query?
 router.get('/', (request, response) => {
   database('users').where('api_key', request.body.api_key)
     .then(users => {
       if (users.length) {
         getFavForecast(request.body.api_key)
           .then(data => response.status(200).send(data))
+          .catch(reason => response.send(reason.message))
+      } else {
+        response.status(401).json({
+          error: `Unauthorized, Could not find user with api key: ${request.body.api_key}`
+        });
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
+router.post('/', (request, response) => {
+  const location = request.body.location
+  console.log(location)
+
+  database('users').where('api_key', request.body.api_key)
+    .then(users => {
+      if (users.length) {
+        database('favorites').insert({ location: `${location}`, user_id: `${users[0].id}`}, "id")
+          .then(data => response.status(201).send(`"message": "${location} has been added to your favorites"`))
           .catch(reason => response.send(reason.message))
       } else {
         response.status(401).json({
