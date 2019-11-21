@@ -6,30 +6,23 @@ const configuration = require('../../../knexfile')[environment];
 const database = require('knex')(configuration);
 const fetch = require('node-fetch');
 
-async function fetchLocation(address) {
-  let response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address.location}&key=${process.env.GOOGLE_API_KEY}`);
-  let location = await response.json();
-  return location;
+async function getUser(key) {
+  let users = await database('users').where('api_key', key);
+  // console.log(users[0].id)
+  return users[0].id;
+}
+
+async function getFavorites(key) {
+  let usersId = await getUser(key);
+  let favorites = await database('favorites').where('user_id', usersId);
+  const locations = await favorites.map(x => x.location);
+  return locations;
 }
 
 
 // Might need to add .select() to the end of the query?
 router.get('/', (request, response) => {
-  database('users').where('api_key', request.body.api_key)
-    .then(users => {
-      if (users.length) {
-        fetchForecast(request.query)
-          .then(data => response.status(200).send(data))
-          .catch(reason => response.send(reason.message))
-      } else {
-        response.status(401).json({
-          error: `Unauthorized, Could not find user with api key: ${request.body.api_key}`
-        });
-      }
-    })
-    .catch(error => {
-      response.status(500).json({ error });
-    });
+  getFavorites(request.body.api_key)
 });
 
 // Could create const all = () => database('papers')
