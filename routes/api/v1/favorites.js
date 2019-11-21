@@ -37,24 +37,27 @@ const getForecasts = (locations) => {
 async function getFavForecast(key) {
   let locations = await getFavorites(key);
   let forecasts = await getForecasts(locations)
-  // might need to make anon async function within map
-  // let forecasts = locations.map(x => await fetchForecast(x));
-
   console.log(forecasts)
-  // return forecasts;
+  return forecasts;
 }
-// async function getFavForecast(key) {
-//   let locations = await getFavorites(key);
-//   // might need to make anon async function within map
-//   let forecasts = locations.map(x => await fetchForecast(x));
-//   console.log(forecasts)
-//   return forecasts;
-// }
-
 // Might need to add .select() to the end of the query?
+// getFavForecast(request.body.api_key)
 router.get('/', (request, response) => {
-  // getFavorites(request.body.api_key)
-  getFavForecast(request.body.api_key)
+  database('users').where('api_key', request.body.api_key)
+    .then(users => {
+      if (users.length) {
+        getFavForecast(request.body.api_key)
+          .then(data => response.status(200).send(data))
+          .catch(reason => response.send(reason.message))
+      } else {
+        response.status(401).json({
+          error: `Unauthorized, Could not find user with api key: ${request.body.api_key}`
+        });
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
 });
 
 
