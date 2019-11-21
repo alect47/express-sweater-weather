@@ -7,14 +7,14 @@ const database = require('knex')(configuration);
 const fetch = require('node-fetch');
 
 const helpers = require('../../../application_helper/helper_functions');
-const fetchForecastH = helpers.fetchForecast;
+const fetchForecast = helpers.fetchForecast;
 
 // Might need to add .select() to the end of the query?
 router.get('/', (request, response) => {
   database('users').where('api_key', request.body.api_key)
     .then(users => {
       if (users.length) {
-        fetchForecastH(request.query)
+        fetchForecast(request.query)
           .then(data => response.status(200).send(data))
           .catch(reason => response.send(reason.message))
       } else {
