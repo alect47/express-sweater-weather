@@ -18,7 +18,7 @@ async function coordinates(address) {
 // might want to have models for data to format forecast
 async function fetchForecast(address) {
   let coords = await coordinates(address);
-  let response = await fetch(`https://api.darksky.net/forecast/${process.env.DARK_SKY_API}/${coords.lat},${coords.lng}`);
+  let response = await fetch(`https://api.darksky.net/forecast/${process.env.DARK_SKY_API}/${coords.lat},${coords.lng}?exclude=minutely,alerts,flags`);
   let forecast = await response.json();
   return forecast;
 };
