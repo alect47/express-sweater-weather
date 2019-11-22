@@ -111,6 +111,75 @@ body:
   "message": "Denver, CO has been added to your favorites",
 }
 ```
+
+3. List Favorite Locations
+```
+GET /api/v1/favorites
+Content-Type: application/json
+Accept: application/json
+
+body:
+
+{
+  "api_key": "jgn983hy48thw9begh98h4539h4"
+}
+```
+### Example Response
+```
+status: 200
+body:
+[
+  {
+    "location": "Denver, CO",
+    "current_weather": {
+      "summary": "Overcast",
+      "icon": "cloudy",
+      "precipIntensity": 0,
+      "precipProbability": 0,
+      "temperature": 54.91,
+      "humidity": 0.65,
+      "pressure": 1020.51,
+      "windSpeed": 11.91,
+      "windGust": 23.39,
+      "windBearing": 294,
+      "cloudCover": 1,
+      "visibility": 9.12,
+    },
+    "location": "Golden, CO",
+    "current_weather": {
+      "summary": "Sunny",
+      "icon": "sunny",
+      "precipIntensity": 0,
+      "precipProbability": 0,
+      "temperature": 71.00,
+      "humidity": 0.50,
+      "pressure": 1015.10,
+      "windSpeed": 10.16,
+      "windGust": 13.40,
+      "windBearing": 200,
+      "cloudCover": 0,
+      "visibility": 8.11,
+    }
+  }
+]
+```
+4. Removing Favorite Locations
+```
+DELETE /api/v1/favorites
+Content-Type: application/json
+Accept: application/json
+
+body:
+
+{
+  "location": "Denver, CO",
+  "api_key": "jgn983hy48thw9begh98h4539h4"
+}
+```
+### Expected Response
+```
+status: 204
+```
 ## Getting started
 To use this repo, you’ll need to `fork` the repo as your own. Once you have done that, you’ll need to run the following command below to get everything up and running. 
 
