@@ -3,6 +3,7 @@ const configuration = require('../knexfile')[environment];
 const database = require('knex')(configuration);
 const fetch = require('node-fetch');
 const Forecast = require('../models/forecast')
+const Favorite = require('../models/favorite')
 
 async function fetchLocation(address) {
   let response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.GOOGLE_API_KEY}`);
@@ -27,7 +28,7 @@ async function fetchForecast(address) {
 
 async function fetchForecastFav(address) {
   let forecast = await fetchForecast(address);
-  let currentForecast = await forecast.currently
+  let currentForecast = await new Favorite(address, forecast)
   return currentForecast;
 };
 
