@@ -87,7 +87,30 @@ body:
       },
     ]
   }
-}```
+}
+```
+2. Post a favorite location
+```
+POST /api/v1/favorites
+Content-Type: application/json
+Accept: application/json
+
+body:
+
+{
+  "location": "Denver, CO",
+  "api_key": "jgn983hy48thw9begh98h4539h4"
+}
+```
+### Example Response
+```
+status: 200
+body:
+
+{
+  "message": "Denver, CO has been added to your favorites",
+}
+```
 ## Getting started
 To use this repo, you’ll need to `fork` the repo as your own. Once you have done that, you’ll need to run the following command below to get everything up and running. 
 
