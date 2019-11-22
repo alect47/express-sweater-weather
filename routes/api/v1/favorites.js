@@ -17,44 +17,29 @@ async function getUser(key) {
   return users[0].id;
 }
 
-async function getFavorites(key) {
-  let usersId = await getUser(key);
-  let favorites = await database('favorites').where('user_id', usersId);
-  const locations = await favorites.map(x => x.location);
-  return locations;
-}
-
 const getForecasts = (locations) => {
   const promises = locations.map(async (location) => {
       return {
           location: `${location}`,
-          current_weather: await fetchForecastFav(location)
+          current_forecast: await fetchForecastFav(location)
       }
   });
   return Promise.all(promises);
 }
-// const getForecasts = (locations) => {
-//   const promises = locations.map(async (location) => {
-//       return {
-//           location: `${location}`,
-//           forecast: await fetchForecast(location)
-//       }
-//   });
-//   return Promise.all(promises);
-// }
 
-async function getFavForecast(key) {
-  let locations = await getFavorites(key);
-  let forecasts = await getForecasts(locations)
-  console.log(forecasts)
-  return forecasts;
-}
+async function getFavorites(key) {
+  let usersId = await getUser(key);
+  let favorites = await database('favorites').where('user_id', usersId);
+  var locations = await favorites.map(x => x.location);
+  let faves = await getForecasts(locations);
+  return faves;
+};
 
 router.get('/', (request, response) => {
   database('users').where('api_key', request.body.api_key)
     .then(users => {
       if (users.length) {
-        getFavForecast(request.body.api_key)
+        getFavorites(request.body.api_key)
           .then(data => response.status(200).send(data))
           .catch(reason => response.send(reason.message))
       } else {
