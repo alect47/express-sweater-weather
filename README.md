@@ -2,6 +2,16 @@
 
 [![Currently Refactoring](https://travis-ci.com/turingschool-examples/all-your-base.svg?branch=master)](https://travis-ci.com/turingschool-examples/all-your-base)
 
+Production Link: (https://express-sweater-weather-aw.herokuapp.com/)
+Endpoints can be hit using Postman
+
+## Introduction
+Express Sweater Weather is an API built in JavaScript using the Express framework along with the NodeJS runtime environment and Knex.  The app consumes the Google Geocode API, as well as the Darksky API to allow users to hit several endpoints to receive weather forecasts for different locations.
+
+## Endpoints
+
+
+
 ## Getting started
 To use this repo, you’ll need to `fork` the repo as your own. Once you have done that, you’ll need to run the following command below to get everything up and running. 
 
