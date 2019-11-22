@@ -10,7 +10,8 @@ Express Sweater Weather is an API built in JavaScript using the Express framewor
 
 ## Endpoints
 1. Get Detailed Forecast for a Location
-```GET /api/v1/forecast?location=denver,co
+```
+GET /api/v1/forecast?location=denver,co
 Content-Type: application/json
 Accept: application/json
 
