@@ -58,6 +58,24 @@ router.get('/', (request, response) => {
     });
 });
 
+router.delete('/', (request, response) => {
+  database('users').where('api_key', request.body.api_key)
+    .then(users => {
+      if (users.length) {
+        database('favorites').where('user_id', `${users[0].id}`).where('location', request.body.location).del()
+          .then(data => response.status(204).send())
+          .catch(reason => response.send(reason.message))
+      } else {
+        response.status(401).json({
+          error: `Unauthorized, Could not find user with api key: ${request.body.api_key}`
+        });
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
 router.post('/', (request, response) => {
   const location = request.body.location
   console.log(location)
