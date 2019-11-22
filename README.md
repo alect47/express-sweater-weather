@@ -9,7 +9,7 @@ Endpoints can be hit using Postman
 Express Sweater Weather is an API built in JavaScript using the Express framework along with the NodeJS runtime environment and Knex.  The app consumes the Google Geocode API, as well as the Darksky API to allow users to hit several endpoints to receive weather forecasts for different locations.
 
 ## Endpoints
-### 1. Get Detailed Forecast for a Location
+1. Get Detailed Forecast for a Location
 
 ## Getting started
 To use this repo, you’ll need to `fork` the repo as your own. Once you have done that, you’ll need to run the following command below to get everything up and running. 
