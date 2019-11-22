@@ -203,54 +203,6 @@ GOOGLE_API_KEY = "<GOOGLE_GEOCODE_KEY>"
 DARK_SKY_API = "<DARKSKY_KEY>"
 ```
 * `node bin/www` to start server
-## Getting started
-To use this repo, you’ll need to `fork` the repo as your own. Once you have done that, you’ll need to run the following command below to get everything up and running. 
-
-#### Installing necessary dependencies
-The easiest way to get started is to run the following command. This will pull down any necessary dependencies that your app will require. You can think of this command as something incredibly similar to `bundle install` in Rails. 
-
-`npm install`
-
-#### Set up your local database
-You’ll need to figure out a name for your database. We suggest calling it something like `sweater_weather_dev`.  
-
-To get things set up, you’ll need to access your Postgres instance by typing in `psql` into your terminal. Once there, you can create your database by running the comment `CREATE DATABASE PUT_DATABASE_NAME_HERE_dev;`. 
-
-Now you have a database for your new project.
-
-#### Migrations
-Once you have your database setup, you’ll need to run some migrations (if you have any). You can do this by running the following command: 
-
-`knex migrate:latest`
-
-
-Instructions to create database, run migrations, and seed: 
-```
-psql
-CREATE DATABASE DATABASE_NAME_dev;
-\q
-
-knex migrate:latest
-knex seed:run
-```
-
-#### Set up your test database
-Most of the setup is going to be same as the one you did before. You’ll notice one small difference with setting the environment flag to `test`.  
-
-```
-psql
-CREATE DATABASE DATABASE_NAME_test;
-\q
-
-knex migrate:latest --env test
-```
-
-## Running your tests
-Running tests are simple and require you to run the following command below: 
-
-`npm test`
-
-When the tests have completed, you’ll get a read out of how things panned out. The tests will be a bit more noisy than what you’re used to, so be prepared. 
 
 ## Setting up your production environment
 This repo comes with a lot of things prepared for you. This includes production ready configuration. To get started, you’ll need to do a few things. 
