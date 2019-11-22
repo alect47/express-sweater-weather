@@ -5,14 +5,14 @@ const fetch = require('node-fetch');
 const Forecast = require('../models/forecast')
 
 async function fetchLocation(address) {
-  let response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address.location}&key=${process.env.GOOGLE_API_KEY}`);
+  let response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.GOOGLE_API_KEY}`);
   let location = await response.json();
   return location;
 }
 
 async function coordinates(address) {
   let data = await fetchLocation(address)
-  let coords = data.results[0].geometry.location;
+  let coords = await data.results[0].geometry.location;
   return coords;
 };
 
