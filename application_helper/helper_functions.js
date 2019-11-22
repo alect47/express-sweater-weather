@@ -23,8 +23,15 @@ async function fetchForecast(address) {
   return forecast;
 };
 
+async function fetchForecastFav(address) {
+  let forecast = await fetchForecast(address);
+  let currentForecast = await forecast.currently
+  return currentForecast;
+};
+
 module.exports = {
   fetchLocation: fetchLocation,
   coordinates: coordinates,
-  fetchForecast: fetchForecast
+  fetchForecast: fetchForecast,
+  fetchForecastFav: fetchForecastFav
 }
