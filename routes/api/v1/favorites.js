@@ -9,6 +9,7 @@ const fetch = require('node-fetch');
 
 const helpers = require('../../../application_helper/helper_functions');
 const fetchForecast = helpers.fetchForecast;
+const fetchForecastFav = helpers.fetchForecastFav;
 
 
 async function getUser(key) {
@@ -27,11 +28,20 @@ const getForecasts = (locations) => {
   const promises = locations.map(async (location) => {
       return {
           location: `${location}`,
-          forecast: await fetchForecast(location)
+          current_weather: await fetchForecastFav(location)
       }
   });
   return Promise.all(promises);
 }
+// const getForecasts = (locations) => {
+//   const promises = locations.map(async (location) => {
+//       return {
+//           location: `${location}`,
+//           forecast: await fetchForecast(location)
+//       }
+//   });
+//   return Promise.all(promises);
+// }
 
 async function getFavForecast(key) {
   let locations = await getFavorites(key);
