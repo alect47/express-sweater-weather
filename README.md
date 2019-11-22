@@ -180,6 +180,29 @@ body:
 ```
 status: 204
 ```
+
+## Tech Stack
+* Language: JavaScript
+* Framework: Express(4.16.1)
+* Runtime Environment: NodeJs
+* Database: PostgreSQL(7.8.0)
+* ORM: Knex(0.19.5)
+* Testin: Jest(24.9.0)
+* Api Calls With: node-fetch(2.6.0)
+
+## Setup
+
+* `git clone git@github.com:alect47/express-sweater-weather.git`
+* `npm install
+* `cd express-sweater-weather` followed by `psql` followed by `CREATE DATABASE ex_sweater_weather`
+* `knex migrate:latest`
+* `knex seed:run`
+* Create a `.env` file with api keys
+```
+GOOGLE_API_KEY = "<GOOGLE_GEOCODE_KEY>"
+DARK_SKY_API = "<DARKSKY_KEY>"
+```
+* `node bin/www` to start server
 ## Getting started
 To use this repo, you’ll need to `fork` the repo as your own. Once you have done that, you’ll need to run the following command below to get everything up and running. 
 
